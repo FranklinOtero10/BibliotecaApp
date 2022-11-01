@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">BibliotecaApp</string>
+    <string name="agregar_pub">Agregar Publicación</string>
+    <string name="mostrar_lista">Mostrar Lista</string>
+    <string name="mostrar_datos">Mostrar Datos</string>
+    <string name="nom_est">Franklin Abelino Espinoza Otero</string>
+    <string name="cod_est">EO17–I04–001</string>
+    <string name="ver">V1.0.1</string>
+    <string name="libro_tag">Libro</string>
+    <string name="estado_tag">Prestado</string>
+    <string name="estado_disp_tag">Disponible</string>
+    <string name="revista_tag">Revista</string>
+    <string name="registrar_publicacion">Registrar Publicación</string>
+    <string name="codigo_publicacion">Código</string>
+    <string name="titulo_publicacion">Titulo publicación</string>
+    <string name="anio_publicacion">Año publicación</string>
+    <string name="numero_revista">Número de revista</string>
+    <string name="titulo">Titulo</string>
+    <string name="libro">Libro</string>
+    <string name="revista">Revista</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="tituloo">Seleccionar publicación</string>
+    <string name="seleccionar_opcion">Debe seleccionar una opción</string>
+    <string name="msg_dialog">"Guardando... Por favor espere "</string>
+    <string name="titulo_lista_vacia">Lista vacia</string>
+    <string name="msg_lista_vacia">La lista esta vacia</string>
+
+</resources>

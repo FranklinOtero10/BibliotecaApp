@@ -5,7 +5,7 @@
     <string name="mostrar_datos">Mostrar Datos</string>
     <string name="nom_est">Franklin Abelino Espinoza Otero</string>
     <string name="cod_est">EO17–I04–001</string>
-    <string name="ver">V1.0.1</string>
+    <string name="ver">V1.0.2</string>
     <string name="libro_tag">Libro</string>
     <string name="estado_tag">Prestado</string>
     <string name="estado_disp_tag">Disponible</string>
@@ -24,5 +24,14 @@
     <string name="msg_dialog">"Guardando... Por favor espere "</string>
     <string name="titulo_lista_vacia">Lista vacia</string>
     <string name="msg_lista_vacia">La lista esta vacia</string>
+    <string name="registro_usuario">Registro de usuario</string>
+    <string name="helper_text">Obligatorio</string>
+    <string name="nombre_de_usuario">Nombre de usuario</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="registrar_text">Registrar</string>
+    <string name="sin_cuenta">Aún no tienes cuenta?. Haz click acá</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="description_img">Imagen de la APP</string>
 
 </resources>

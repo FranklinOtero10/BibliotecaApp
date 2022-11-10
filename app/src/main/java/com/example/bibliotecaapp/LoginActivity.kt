@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.bibliotecaapp.databinding.ActivityLoginBinding
@@ -25,9 +26,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            login()
+            if (binding.edtUserName.text.toString().isNotEmpty() && binding.edtPassword.text.toString().isNotEmpty()){
+                login()
+            }else{
+                AlertDialog.Builder(this).setTitle("¡Advertencia!")
+                    .setMessage("Introduzca su correo/contraseña")
+                    .setPositiveButton("Ok", null).show()
+            }
         }
-
         configGlide()
     }
 

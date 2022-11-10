@@ -9,19 +9,11 @@
     android:padding="@dimen/min_margin_default"
     android:orientation="vertical">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/bienvenido"
-        android:textAlignment="center"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:layout_marginTop="50dp"/>
-
     <ImageView
         android:id="@+id/imgvIconApp"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
         android:layout_gravity="center"
         android:contentDescription="@string/description_img"
         />
@@ -29,7 +21,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         app:endIconMode="clear_text"
         app:helperText="@string/helper_text"
         app:counterEnabled="true"
@@ -47,7 +39,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         app:endIconMode="password_toggle"
         app:helperText="@string/helper_text"
         android:padding="@dimen/min_margin_default"
@@ -66,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/iniciar_sesion"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="5dp"
         app:cornerRadius="100dp"
         android:textAllCaps="false"/>
     <TextView
@@ -74,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sin_cuenta"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:textStyle="bold"
         android:textSize="@dimen/text_size_items"
         android:textAlignment="textEnd"

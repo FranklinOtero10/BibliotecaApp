@@ -56,5 +56,6 @@
         android:layout_height="wrap_content"
         android:text="@string/registrar_text"
         android:layout_marginTop="10dp"
+        app:cornerRadius="100dp"
         android:textAllCaps="false"/>
 </LinearLayout>

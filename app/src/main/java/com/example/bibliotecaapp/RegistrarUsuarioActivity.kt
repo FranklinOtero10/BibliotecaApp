@@ -2,6 +2,7 @@ package com.example.bibliotecaapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import com.example.bibliotecaapp.databinding.ActivityRegistrarUsuarioBinding
 
 class RegistrarUsuarioActivity : AppCompatActivity() {
@@ -12,6 +13,7 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrarUsuarioBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         title = "Registrar Usuario"
 
@@ -34,5 +36,15 @@ class RegistrarUsuarioActivity : AppCompatActivity() {
             putString("password", binding.edtPassword.text.toString())
                 .apply()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                // Finalizar la actividad
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

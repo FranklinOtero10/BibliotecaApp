@@ -9,16 +9,19 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 
 import com.example.bibliotecaapp.MainActivity.Companion.publicacionRepository
-import com.example.bibliotecaapp.Models.Libro
-import com.example.bibliotecaapp.Models.Revista
+import com.example.bibliotecaapp.Models.LibroEntity
+import com.example.bibliotecaapp.Models.RevistaEntity
 import com.example.bibliotecaapp.databinding.ActivityRegistrarPublicacionBinding
 import com.google.android.material.snackbar.Snackbar
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
-class RegistrarPublicacionActivity : AppCompatActivity(),
-    View.OnClickListener {
+class RegistrarPublicacionActivity : AppCompatActivity(), View.OnClickListener {
+
     // Variable para gestionar el viewBinding
     private lateinit var binding: ActivityRegistrarPublicacionBinding
     private var tipoPublicacion: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "Ingrese los datos"
@@ -83,9 +86,16 @@ class RegistrarPublicacionActivity : AppCompatActivity(),
             binding.layoutRegistrarPublicacion.edtAnioPublicacion.text.toString().isEmpty()){
             Snackbar.make(binding.root, "Debe completar todos los campos", Snackbar.LENGTH_SHORT).show()
         }else{
-            publicacionRepository.add(Libro(binding.layoutRegistrarPublicacion.edtCodigo.text.toString().toInt(),
-                binding.layoutRegistrarPublicacion.edtTitulo.text.toString(),
-                binding.layoutRegistrarPublicacion.edtAnioPublicacion.text.toString().toInt()))
+            doAsync {
+                BibliotecaApplication.database.libroDao().addLibro(LibroEntity(
+                    codigo = binding.layoutRegistrarPublicacion.edtCodigo.text.toString().toInt(),
+                    titulo = binding.layoutRegistrarPublicacion.edtTitulo.text.toString(),
+                    anioPublicacion = binding.layoutRegistrarPublicacion.edtAnioPublicacion.text.toString().toInt()
+                ))
+                uiThread {
+                    finish()
+                }
+            }
             // Llamado al dialog
             configProgressDialog()
         }
@@ -98,10 +108,18 @@ class RegistrarPublicacionActivity : AppCompatActivity(),
             binding.layoutRegistrarPublicacion.edtNumeroRevista.text.toString().isEmpty()){
             Snackbar.make(binding.root, "Debe completar todos los campos", Snackbar.LENGTH_SHORT).show()
         }else{
-            publicacionRepository.add(Revista(binding.layoutRegistrarPublicacion.edtCodigo.text.toString().toInt(),
-                binding.layoutRegistrarPublicacion.edtTitulo.text.toString(),
-                binding.layoutRegistrarPublicacion.edtAnioPublicacion.text.toString().toInt(),
-                binding.layoutRegistrarPublicacion.edtNumeroRevista.text.toString().toInt()))
+            doAsync {
+                BibliotecaApplication.database.revistaDao().addRevista(
+                    RevistaEntity(
+                        codigo =binding.layoutRegistrarPublicacion.edtCodigo.text.toString().toInt(),
+                        titulo = binding.layoutRegistrarPublicacion.edtTitulo.text.toString(),
+                        anioPublicacion = binding.layoutRegistrarPublicacion.edtAnioPublicacion.text.toString().toInt(),
+                        numeroRev = binding.layoutRegistrarPublicacion.edtNumeroRevista.text.toString().toInt())
+                )
+                uiThread {
+                    finish()
+                }
+            }
             // Llamado al dialog
             configProgressDialog()
         }

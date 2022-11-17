@@ -10,12 +10,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.bibliotecaapp.Adapters.PublicacionAdapter
 import com.example.bibliotecaapp.Interfaces.IOnClickListener
 import com.example.bibliotecaapp.MainActivity.Companion.publicacionRepository
-import com.example.bibliotecaapp.Models.Libro
+import com.example.bibliotecaapp.Models.LibroEntity
+import com.example.bibliotecaapp.Models.RevistaEntity
 import com.example.bibliotecaapp.databinding.ActivityMostrarListaActivityBinding
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class MostrarListaActivity : AppCompatActivity(), IOnClickListener {
 
@@ -25,6 +27,7 @@ class MostrarListaActivity : AppCompatActivity(), IOnClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var publicacionAdapter: PublicacionAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
+    private var tipoPublicacion: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +37,11 @@ class MostrarListaActivity : AppCompatActivity(), IOnClickListener {
         setContentView(binding.root)
         // Habilitar action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        tipoPublicacion = intent.extras!!.getInt("tipoPublicacion")
+
         // Validar si la lista esta vacia
-        if(publicacionRepository.get().size == 0){
+        /*if(publicacionRepository.get().size == 0){
             AlertDialog.Builder(this).setTitle(this.resources.getString(R.string.titulo_lista_vacia))
                 .setMessage(this.resources.getString(R.string.msg_lista_vacia))
                 .setPositiveButton(android.R.string.ok,
@@ -56,14 +62,42 @@ class MostrarListaActivity : AppCompatActivity(), IOnClickListener {
                 }, 2000)
                 Toast.makeText(this, "Lista actualizada", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
         configRecyclerView()
     }
+
+    private fun getLibros(){
+        doAsync {
+            val libros = BibliotecaApplication.database.libroDao().getAll()
+            uiThread {
+                publicacionAdapter.setLibros(libros)
+            }
+        }
+    }
+
+    private fun getRevistas(){
+        doAsync {
+            val revistas = BibliotecaApplication.database.revistaDao().getAll()
+            uiThread {
+                publicacionAdapter.setRevistas(revistas)
+            }
+        }
+    }
+
     // Método que configura el recyclerview
     private fun configRecyclerView(){
         recyclerView = binding.rcPublicaciones
-        publicacionAdapter = PublicacionAdapter(publicacionRepository.get(), this)
+        publicacionAdapter = PublicacionAdapter(mutableListOf(), this)
         linearLayoutManager = LinearLayoutManager(this)
+
+        if(tipoPublicacion == 1){
+            // Libros
+            getLibros()
+        } else {
+            // Revistas
+            getRevistas()
+        }
+
         recyclerView.apply {
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = linearLayoutManager
@@ -82,18 +116,48 @@ class MostrarListaActivity : AppCompatActivity(), IOnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun notifyItemChange(position: Int){
-        publicacionAdapter.notifyItemChanged(position)
+    override fun onClickListener(libroEntity: LibroEntity, position: Int) {
+        if(libroEntity.Prestado()){
+            // Si el libroEntity esta prestado, ejecutar devolucion
+            doAsync {
+                libroEntity.devolver()
+                BibliotecaApplication.database.libroDao().updateLibro(libroEntity)
+                uiThread {
+                    publicacionAdapter.updateLibro(libroEntity)
+                }
+            }
+        } else {
+            // El libroEntity se encuentra disponible para ser prestado
+            doAsync {
+                libroEntity.prestar()
+                BibliotecaApplication.database.libroDao().updateLibro(libroEntity)
+                uiThread {
+                    publicacionAdapter.updateLibro(libroEntity)
+                }
+            }
+        }
     }
 
-    override fun onClickListener(libro: Libro, position: Int) {
-        if(libro.Prestado()){
-            // Si el libro esta prestado, ejecutar devolucion
-            libro.devolver()
-        } else {
-            // El libro se encuentra disponible para ser prestado
-            libro.prestar()
+    override fun onDeleteLibro(libroEntity: LibroEntity, position: Int) {
+        doAsync {
+            BibliotecaApplication.database.libroDao().deleteLibro(libroEntity)
+            uiThread {
+                publicacionAdapter.deleteLibro(libroEntity)
+            }
         }
-        notifyItemChange(position)
+    }
+
+    override fun onDeleteRevista(revistaEntity: RevistaEntity, position: Int) {
+        AlertDialog.Builder(this)
+            .setTitle(this.resources.getString(R.string.titulo_eliminar))
+            .setMessage(this.resources.getString(R.string.msg_eliminar))
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                doAsync {
+                    BibliotecaApplication.database.revistaDao().deleteRevista(revistaEntity)
+                    uiThread {
+                        publicacionAdapter.deleteRevista(revistaEntity)
+                    }
+                }
+            }.show()
     }
 }

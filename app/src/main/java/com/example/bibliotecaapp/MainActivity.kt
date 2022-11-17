@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             binding.layoutPrincipal.btnMostrarLista.id -> {
                 // Mostrar lista de publicaciones
-                startActivity(Intent(this, MostrarListaActivity::class.java))
+                startActivity(Intent(this, TipoListaActivity::class.java))
             }
             binding.layoutPrincipal.btnMostrarDatos.id -> {
                 // Mostrar datos del desarrollador

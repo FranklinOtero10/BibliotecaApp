@@ -33,5 +33,9 @@
     <string name="iniciar_sesion">Iniciar sesión</string>
     <string name="bienvenido">Bienvenido</string>
     <string name="description_img">Imagen de la APP</string>
+    <string name="titulo_eliminar">Eliminar</string>
+    <string name="msg_eliminar">Realmente desea eliminar?</string>
+    <string name="titulo_filtro">Seleccionar filtro</string>
+    <string name="libroEntity">Libro</string>
 
 </resources>

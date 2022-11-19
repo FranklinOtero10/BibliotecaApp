@@ -15,6 +15,8 @@ class BibliotecaApplication : Application() {
         database = Room.databaseBuilder(this,
             BibliotecaDatabase::class.java,
             "BibliotecaDB")
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
             .build()
     }
 }

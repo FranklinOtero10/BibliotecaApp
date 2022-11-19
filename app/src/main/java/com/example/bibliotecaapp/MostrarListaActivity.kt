@@ -63,6 +63,17 @@ class MostrarListaActivity : AppCompatActivity(), IOnClickListener {
                 Toast.makeText(this, "Lista actualizada", Toast.LENGTH_SHORT).show()
             }
         }*/
+        // Accediendo al evente que actualiza la lista
+        binding.swRefresh.setOnRefreshListener {
+            // Configurar RecyclerView
+            configRecyclerView()
+
+            // Configurando hilo, para asignar tiempo
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.swRefresh.isRefreshing = false
+            }, 2000)
+            Toast.makeText(this, "Lista actualizada", Toast.LENGTH_SHORT).show()
+        }
         configRecyclerView()
     }
 
@@ -139,12 +150,17 @@ class MostrarListaActivity : AppCompatActivity(), IOnClickListener {
     }
 
     override fun onDeleteLibro(libroEntity: LibroEntity, position: Int) {
-        doAsync {
-            BibliotecaApplication.database.libroDao().deleteLibro(libroEntity)
-            uiThread {
-                publicacionAdapter.deleteLibro(libroEntity)
-            }
-        }
+        AlertDialog.Builder(this)
+            .setTitle(this.resources.getString(R.string.titulo_eliminar))
+            .setMessage(this.resources.getString(R.string.msg_eliminar))
+            .setPositiveButton(android.R.string.ok){ _, _ ->
+                doAsync {
+                    BibliotecaApplication.database.libroDao().deleteLibro(libroEntity)
+                    uiThread {
+                        publicacionAdapter.deleteLibro(libroEntity)
+                    }
+                }
+            }.show()
     }
 
     override fun onDeleteRevista(revistaEntity: RevistaEntity, position: Int) {

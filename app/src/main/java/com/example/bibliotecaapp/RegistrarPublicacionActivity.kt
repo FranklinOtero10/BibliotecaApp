@@ -67,8 +67,7 @@ class RegistrarPublicacionActivity : AppCompatActivity(), View.OnClickListener {
     // Configurador del progress dialog
     fun configProgressDialog(){
         val alertBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.progress_dialog,
-            null)
+        val dialogView = layoutInflater.inflate(R.layout.progress_dialog, null)
         alertBuilder.setView(dialogView)
         alertBuilder.setCancelable(false)
         val dialog = alertBuilder.create()
@@ -80,7 +79,7 @@ class RegistrarPublicacionActivity : AppCompatActivity(), View.OnClickListener {
         }, 3000)
     }
 
-    fun validarLibro(){
+    private fun validarLibro(){
         if(binding.layoutRegistrarPublicacion.edtCodigo.text.toString().isEmpty() ||
             binding.layoutRegistrarPublicacion.edtTitulo.text.toString().isEmpty() ||
             binding.layoutRegistrarPublicacion.edtAnioPublicacion.text.toString().isEmpty()){
@@ -97,11 +96,11 @@ class RegistrarPublicacionActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             // Llamado al dialog
-            configProgressDialog()
+            //configProgressDialog()
         }
     }
 
-    fun validarRevista(){
+    private fun validarRevista(){
         if(binding.layoutRegistrarPublicacion.edtCodigo.text.toString().isEmpty() ||
             binding.layoutRegistrarPublicacion.edtTitulo.text.toString().isEmpty() ||
             binding.layoutRegistrarPublicacion.edtAnioPublicacion.text.toString().isEmpty() ||
@@ -121,7 +120,7 @@ class RegistrarPublicacionActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             // Llamado al dialog
-            configProgressDialog()
+            //configProgressDialog()
         }
     }
 }
